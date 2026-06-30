@@ -30,7 +30,6 @@ def add_player():
         game_state["player_stats"][name] = {"truth": 0, "dare": 0}
     return jsonify({"players": game_state["players"]})
 
-# --- NEW: KICK PLAYER ENDPOINT ---
 @app.route('/api/remove_player', methods=['POST'])
 def remove_player():
     data = request.json
@@ -40,6 +39,15 @@ def remove_player():
         if name in game_state["player_stats"]:
             del game_state["player_stats"][name]
     return jsonify({"players": game_state["players"]})
+
+# --- NEW: CLEAR ALL INSTANCE DATA ---
+@app.route('/api/clear_players', methods=['POST'])
+def clear_players():
+    game_state["players"] = []
+    game_state["player_stats"] = {}
+    game_state["current_player"] = None
+    game_state["total_turns_taken"] = 0
+    return jsonify({"status": "cleared", "players": []})
 
 @app.route('/api/spin_bottle', methods=['GET'])
 def spin_bottle():
