@@ -1,0 +1,22 @@
+shots_bank = [
+    "Take a shot if you have ever lied about your location to your parents.",
+    "Waterfall! You start drinking, and the person to your right starts, and so on. No one stops until you do.",
+    "Assign 2 shots to anyone in the room who is wearing black.",
+    "Take a shot if you've ever ghosted someone after a first date.",
+    "Cheers! Everyone takes a sip of their drink.",
+    "Take a shot if you currently have an ex blocked on any app.",
+    "The person with the lowest phone battery has to take a shot.",
+    "Take a shot if you've ever cried over someone you never officially dated.",
+    "Give a shot to the person you think is the worst driver in the room.",
+    "Take a shot if you've ever used a fake ID to get into a club or buy drinks.",
+    "Take a shot if you have ever been rejected after proposing a startup idea.",
+    "Everyone who has ever been on a 'Goa trip' that actually happened, take a shot.",
+    "Everyone who has a Goa trip WhatsApp group where nobody replies, take a shot.",
+    "Take a shot if you have ever written a line of code that completely broke production.",
+    "Assign a shot to the person who spends the most money on food delivery apps.",
+    "Take a shot if you have ever stalked your own ex on LinkedIn just to see where they work.",
+    "The last person to touch the floor takes a shot. Go!",
+    "Take a shot if you have ever lied about your age to someone.",
+    "Give out 3 shots to anyone in the room if you can name all of their exes.",
+    "Take a shot if you have ever fallen asleep during a university lecture and got caught."
+]

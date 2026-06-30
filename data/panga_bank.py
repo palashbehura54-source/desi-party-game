@@ -1,0 +1,22 @@
+panga_bank = [
+    "Push-up contest right now. First to drop takes a shot.",
+    "Roast battle. You have 30 seconds each to destroy the other guy. The group votes on the winner. Loser drinks.",
+    "Arm wrestle on the table. Loser has to act as the winner's 'wingman/servant' for the next 2 rounds.",
+    "Staring contest. First guy to blink takes a shot.",
+    "Rock, Paper, Scissors. Best 2 out of 3. Loser gets a tight slap on the back of the neck.",
+    "Pitch a terrible startup idea to the group in 30 seconds. The group votes whose pitch was better. Loser drinks.",
+    "Who can name more programming languages in 15 seconds? Go. Loser drinks.",
+    "Cricket trivia deathmatch! The group asks one random cricket stat question. Whoever shouts the correct answer first wins. Loser drinks.",
+    "Debate: Who in the group is most likely to ruin their suspension with cheap car mods? Group votes between the two of you.",
+    "Thumb wrestling match. Best out of 3. Loser takes a shot.",
+    "Who can hold their breath the longest? Timer starts now. Loser takes a shot.",
+    "Take turns naming car brands. First one to hesitate or repeat takes a shot.",
+    "Plank contest. Drop to the floor. First one's knees to touch the ground takes a shot.",
+    "Who can name more Bollywood actors with the last name 'Kapoor' in 10 seconds? Loser drinks.",
+    "Take turns naming Indian states. First one to hesitate or repeat takes a shot.",
+    "Rap battle. You each get 15 seconds to drop a beat and spit a verse. Group votes on who has the worst flow. Loser drinks.",
+    "Wall sit challenge. Backs against the wall, knees at 90 degrees. First one to stand up or fall takes a shot.",
+    "Who can name the most parts of a car engine in 15 seconds? Loser takes a shot.",
+    "Math deathmatch. The group yells a complex multiplication problem (e.g., 14 x 6). First to shout the right answer wins. Loser drinks.",
+    "Staring contest while insulting each other. The first person to laugh or blink takes a shot."
+]
