@@ -133,6 +133,22 @@
         if (e.key === 'Enter') addPlayer();
     });
 
+    // Helper function to draw the player list with the Kick button
+    function renderPlayers() {
+        document.getElementById('player-list').innerHTML = localPlayers.map(p => 
+            `<div class="player-tag">
+                ${p} 
+                <span style="cursor:pointer; color:#e11d48; margin-left:8px; font-weight:900;" onclick="removePlayer('${p}')">✖</span>
+            </div>`
+        ).join('');
+        
+        if (localPlayers.length >= 2) {
+            document.getElementById('start-btn').style.display = 'block';
+        } else {
+            document.getElementById('start-btn').style.display = 'none';
+        }
+    }
+
     async function addPlayer() {
         const nameInput = document.getElementById('player-input');
         const name = nameInput.value.trim();
@@ -146,13 +162,21 @@
         const data = await response.json();
         localPlayers = data.players;
         
-        document.getElementById('player-list').innerHTML = localPlayers.map(p => `<div class="player-tag">${p}</div>`).join('');
+        renderPlayers();
         nameInput.value = '';
         nameInput.focus();
-        
-        if (localPlayers.length >= 2) {
-            document.getElementById('start-btn').style.display = 'block';
-        }
+    }
+
+    // NEW: Kick Player Function
+    async function removePlayer(name) {
+        const response = await fetch('/api/remove_player', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        });
+        const data = await response.json();
+        localPlayers = data.players;
+        renderPlayers();
     }
 
     async function goToNextTurn() {
@@ -164,11 +188,17 @@
         buttons.style.display = 'none';
         display.classList.add('spinning');
 
-        const response = await fetch('/api/spin_bottle');
-        const data = await response.json();
+        // LAG FIX: Set placeholders, start the animation instantly
+        let finalPlayer = "Loading...";
+        let playerStats = { truth: 0, dare: 0 };
         
-        const finalPlayer = data.selected_player;
-        const playerStats = data.stats;
+        // Fetch runs invisibly in the background so the UI doesn't freeze
+        fetch('/api/spin_bottle')
+            .then(res => res.json())
+            .then(data => {
+                finalPlayer = data.selected_player;
+                playerStats = data.stats;
+            });
 
         let spins = 0;
         const maxSpins = 25; 
@@ -182,7 +212,7 @@
             if (spins >= maxSpins) {
                 clearInterval(spinInterval);
                 display.classList.remove('spinning');
-                display.innerText = finalPlayer;
+                display.innerText = finalPlayer; // Locks onto the fetched name
                 display.style.color = '#10b981'; 
                 
                 setTimeout(() => {
