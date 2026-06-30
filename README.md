@@ -1,6 +1,7 @@
 # Desi Night 🎉 - The Ultimate Party Game
 
 A fast-paced, web-based digital Truth or Dare party game designed specifically for a group of guys hanging out. Built with a "Desi" touch, featuring competitive 1v1 'Panga' challenges, drinking rules, an automatic 18+ mode escalation, and a native iOS app feel.
+Live at: https://desi-party-game.onrender.com
 
 **Made by Palash ❤️**
 
