@@ -24,7 +24,6 @@
         body { background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; text-align: center; overflow: hidden; position: relative; }
         .container { width: 100%; max-width: 400px; z-index: 2; padding-bottom: 40px; }
         
-        /* The Palash Badge */
         .made-by { position: fixed; bottom: 15px; width: 100%; left: 0; text-align: center; color: #71717a; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; z-index: 1; pointer-events: none; }
         
         h1 { font-size: 2.5rem; margin-bottom: 5px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; font-weight: 900; }
@@ -44,6 +43,7 @@
         .btn-dare { background: #e11d48; }
         .btn-shot { background: #10b981; color: #000; }
         .btn-panga { background: #8b5cf6; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); } 
+        .btn-danger { background: #e11d48; }
 
         .rules-box { background: #27272a; border: 1px solid #3f3f46; border-radius: 12px; padding: 15px; text-align: left; margin: 20px 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); }
         .rules-title { font-weight: bold; color: var(--text-main); margin-bottom: 8px; font-size: 1.1rem; text-align: center; }
@@ -75,6 +75,7 @@
 <div class="made-by">Made by Palash ❤️</div>
 
 <div class="container">
+    <!-- SCREEN 1: SETUP -->
     <div id="setup-screen" class="screen active">
         <h1>Desi Night</h1>
         
@@ -88,12 +89,18 @@
         </div>
         
         <input type="text" id="player-input" placeholder="Enter player name..." autocomplete="off">
-        <button class="btn-primary" onclick="addPlayer()">Add Player</button>
+        
+        <!-- NEW: Grouped Add & Clear buttons -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <button class="btn-primary" onclick="addPlayer()" style="margin-bottom: 0;">Add</button>
+            <button class="btn-danger" onclick="clearAllPlayers()" style="margin-bottom: 0; font-size: 0.9rem;">Clear All</button>
+        </div>
         
         <div class="player-list" id="player-list"></div>
         <button class="btn-primary" id="start-btn" onclick="goToNextTurn()" style="display: none; margin-top: 20px;">Start Game</button>
     </div>
 
+    <!-- SCREEN 2: THE BOTTLE SPIN -->
     <div id="choice-screen" class="screen">
         <p style="color: var(--text-muted); font-size: 1.2rem; margin-top: 20px;">Spinning...</p>
         
@@ -111,6 +118,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 3: 3D CARD REVEAL -->
     <div id="prompt-screen" class="screen">
         <div class="card-container" onclick="document.getElementById('challenge-card').classList.add('flipped')">
             <div class="card" id="challenge-card">
@@ -133,7 +141,6 @@
         if (e.key === 'Enter') addPlayer();
     });
 
-    // Helper function to draw the player list with the Kick button
     function renderPlayers() {
         document.getElementById('player-list').innerHTML = localPlayers.map(p => 
             `<div class="player-tag">
@@ -167,7 +174,6 @@
         nameInput.focus();
     }
 
-    // NEW: Kick Player Function
     async function removePlayer(name) {
         const response = await fetch('/api/remove_player', {
             method: 'POST',
@@ -175,6 +181,17 @@
             body: JSON.stringify({ name: name })
         });
         const data = await response.json();
+        localPlayers = data.players;
+        renderPlayers();
+    }
+
+    // NEW: Clear all players and reset game logic
+    async function clearAllPlayers() {
+        if (!confirm("Are you sure you want to wipe all players and reset the game?")) return;
+        
+        const response = await fetch('/api/clear_players', { method: 'POST' });
+        const data = await response.json();
+        
         localPlayers = data.players;
         renderPlayers();
     }
@@ -188,11 +205,9 @@
         buttons.style.display = 'none';
         display.classList.add('spinning');
 
-        // LAG FIX: Set placeholders, start the animation instantly
         let finalPlayer = "Loading...";
         let playerStats = { truth: 0, dare: 0 };
         
-        // Fetch runs invisibly in the background so the UI doesn't freeze
         fetch('/api/spin_bottle')
             .then(res => res.json())
             .then(data => {
@@ -212,7 +227,7 @@
             if (spins >= maxSpins) {
                 clearInterval(spinInterval);
                 display.classList.remove('spinning');
-                display.innerText = finalPlayer; // Locks onto the fetched name
+                display.innerText = finalPlayer;
                 display.style.color = '#10b981'; 
                 
                 setTimeout(() => {
